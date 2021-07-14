@@ -7,8 +7,23 @@ app.engine('hbs', hbs({ extname: 'hbs', layoutsDir: './layouts', defaultLayout: 
 app.set('view engine', '.hbs');
 
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.urlencoded({ extended: false }));
 
+// nowe
+app.post('/contact/send-message', (req, res) => {
 
+  const { author, sender, title, message } = req.body;
+
+  if(author && sender && title && message) {
+    res.render('contact', { isSent: true });
+  }
+  else {
+    res.render('contact', { isError: true });
+  }
+
+});
+
+// stare
 app.get('/', (req, res) => {
   res.render('index');
 });
